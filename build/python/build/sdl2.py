@@ -33,6 +33,13 @@ class SDL2Project(AutotoolsProject):
                             os.path.join(src, 'include/SDL_config.h'))
 
             return src
+        
+        if toolchain.actual_arch == 'x86_64-apple-darwin':
+            # If an X11 server is installed on macOS then SDL will detect it and
+            # enable the X11 video backend. This in turn will lead to XCSoar
+            # build errors because SDL_VIDEO_DRIVER_X11 is defined which will
+            # lead to a redefinition of a constant. XCSoar does not use X11 on
+            # macOS therefore we can disable X11 support.
+            self.configure_args += ['--disable-video-x11']
 
-        else:
-            return AutotoolsProject.configure(self, toolchain, *args, **kwargs)
+        return AutotoolsProject.configure(self, toolchain)

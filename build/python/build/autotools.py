@@ -51,8 +51,10 @@ class AutotoolsProject(MakeProject):
             else:
                 subprocess.check_call(['libtoolize', '--force'], cwd=src)
             subprocess.check_call(['aclocal'], cwd=src)
-            subprocess.check_call(['automake', '--add-missing', '--force-missing', '--foreign'], cwd=src)
-            subprocess.check_call(['autoconf'], cwd=src)
+            if os.path.exists(os.path.join(src, 'Makefile.am')):
+                subprocess.check_call(['automake', '--add-missing', '--force-missing', '--foreign'], cwd=src)
+            if os.path.exists(os.path.join(src, 'configure.ac')):
+                subprocess.check_call(['autoconf'], cwd=src)
 
         cppflags = toolchain.cppflags
         if self.name == 'glibc':

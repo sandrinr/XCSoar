@@ -318,6 +318,7 @@ sdl2 = SDL2Project(
         '--disable-shared', '--enable-static',
     ],
     patches=abspath('lib/sdl2/patches'),
+    autogen=True,
 )
 
 lua = LuaProject(
