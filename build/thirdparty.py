@@ -140,6 +140,7 @@ elif 'apple-darwin' in actual_host_triplet:
         libsodium,
         cares,
         curl,
+        freetype,
         lua,
         proj,
         libtiff,
